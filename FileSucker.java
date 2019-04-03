@@ -1,4 +1,3 @@
-package com.sleepfuriously.filesucker;
 
 import java.io.File;
 import java.io.IOException;
