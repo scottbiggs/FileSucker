@@ -1,17 +1,10 @@
 package com.sleepfuriously.FileSucker;
 
-/*
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-*/
 import java.io.File;
 import java.io.IOException;
 
 import java.net.MalformedURLException;
-import java.net.URL;
-//import org.apache.commons.io.FileUtils;
+import java.net.URL;//import org.apache.commons.io.FileUtils;
 
 
 /**
@@ -108,33 +101,9 @@ public class FileSucker {
 	 * Returns TRUE iff successfully downloaded the specified file to the given filename.
 	 */
 	private static boolean downloadFile (String url_str, String filename) {
+		return false;
 	}
 
-/*	NOTE:  I had problems getting these libs to work, so I'm trying a different tactic.
-
-	private static boolean downloadFile(String url_str, String filename) {
-		try {
-			final URL url = new URL (url_str);
-			File file = new File("./" + filename);
-
-			FileUtils.copyURLToFile(url, file);
-		}
-
-		catch (IOException e) {
-			if (e instanceof MalformedURLException) {
-				// a REAL error
-				System.out.println("Error: Unable to form a URL!!!");
-				e.printStackTrace();
-			}
-			else {
-				System.out.println("Error: Problem getting or saving file (could be expected).");
-			}
-			return false;
-		}
-
-		return true;
-	}
-*/
 
 	/**
 	 * Creates a full URL string from the current state of the member data
