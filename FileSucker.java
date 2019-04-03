@@ -1,3 +1,5 @@
+package com.sleepfuriously.FileSucker;
+
 /*
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +11,7 @@ import java.io.IOException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.apache.commons.io.FileUtils;
+//import org.apache.commons.io.FileUtils;
 
 
 /**
@@ -102,6 +104,14 @@ public class FileSucker {
 	}
 
 
+	/**
+	 * Returns TRUE iff successfully downloaded the specified file to the given filename.
+	 */
+	private static boolean downloadFile (String url_str, String filename) {
+	}
+
+/*	NOTE:  I had problems getting these libs to work, so I'm trying a different tactic.
+
 	private static boolean downloadFile(String url_str, String filename) {
 		try {
 			final URL url = new URL (url_str);
@@ -124,6 +134,7 @@ public class FileSucker {
 
 		return true;
 	}
+*/
 
 	/**
 	 * Creates a full URL string from the current state of the member data
