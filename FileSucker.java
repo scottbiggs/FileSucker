@@ -1,6 +1,7 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 
 import java.net.MalformedURLException;
 import java.net.URL;//import org.apache.commons.io.FileUtils;
@@ -121,20 +122,44 @@ public class FileSucker {
 	 * Returns TRUE iff successfully downloaded the specified file to the given filename.
 	 */
 	private static boolean downloadFile (String url_str, String filename) {
+
+		System.out.println("downloadFile ( " + url_str + ", " + filename + " )");
+
+		ReadableByteChannel rbc = null;
+		FileOutputStream fos = null;
+
 		try {
 			URL website = new URL(url_str);
-			ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+			rbc = Channels.newChannel(website.openStream());
 
-			FileOutputStream fos = new FileOutputStream(filename);
+			fos = new FileOutputStream(filename);
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 
 			fos.close();
+//			fos = null;
+
 			rbc.close();
+//			rbc = null;
 		}
+//		catch (IOException | FileNotFoundException e) {
 		catch (IOException e) {
-			e.printStackTrace();
+			if (e instanceof FileNotFoundException) {
+				System.out.println("Cannot find file!");
+			}
+			else {
+				e.printStackTrace();
+			}
 			return false;
 		}
+//		finally {
+//			if (rbc != null) {
+//				rbc.close();
+//			}
+//			if (fos != null) {
+//				fos.close();
+//			}
+//		}
+
 		return true;
 	}
 
@@ -251,6 +276,7 @@ public class FileSucker {
 		boolean val = Character.isLetterOrDigit(c);
 		switch (c) {
 			case '.':
+			case '-':
 			case '_':
 			case '+':
 				val = true;
