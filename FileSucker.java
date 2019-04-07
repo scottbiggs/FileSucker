@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 import java.net.MalformedURLException;
-import java.net.URL;//import org.apache.commons.io.FileUtils;
+import java.net.URL;
 
 import java.io.FileOutputStream;
 import java.nio.channels.Channels;
@@ -136,12 +136,8 @@ public class FileSucker {
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 
 			fos.close();
-//			fos = null;
-
 			rbc.close();
-//			rbc = null;
 		}
-//		catch (IOException | FileNotFoundException e) {
 		catch (IOException e) {
 			if (e instanceof FileNotFoundException) {
 				System.out.println("Cannot find file!");
@@ -151,14 +147,6 @@ public class FileSucker {
 			}
 			return false;
 		}
-//		finally {
-//			if (rbc != null) {
-//				rbc.close();
-//			}
-//			if (fos != null) {
-//				fos.close();
-//			}
-//		}
 
 		return true;
 	}
@@ -213,25 +201,14 @@ public class FileSucker {
 		int i = 0;
 		int url_length = url.length();
 
-//		System.out.println("url_length = " + url_length);
 		char ch = url.charAt(url_length - 1);
 
 		while ((i < url.length()) && (isLegalFileChar(ch))) {
-//		while ((i < url.length())
-//				&& ((Character.isLetterOrDigit(ch)
-//					|| (ch == '.')
-//					|| (ch == '+')
-//					|| (ch == '_')))) {
-//			System.out.println("  i = " + i + ", ch = " + ch);
 			i++;
 			ch = url.charAt(url_length - (1 + i));
 		}
 
-//		System.out.println("done with loop: i = " + i);
-
 		String filename = url.substring(url_length - i);
-
-//		System.out.println("exit: filename = " + filename);
 		return filename;
 	}
 
