@@ -1,0 +1,7 @@
+### Useful files to ignore for Java development
+*.class
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+hs_err_pid*
