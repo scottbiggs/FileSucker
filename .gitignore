@@ -4,4 +4,5 @@
 *.jar
 *.war
 *.ear
+*.jpg
 hs_err_pid*
