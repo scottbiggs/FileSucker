@@ -87,6 +87,10 @@ public class FileSucker {
 			return;
 		}
 
+		// Pretend to be a browser (many servers will only send data to browsers)
+		System.setProperty("http.agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.29 Safari/537.36");
+
+
 		if (m_justOne) {
 			String filename = extractFileFromUrl(m_justUrl);
 			if (downloadFile(m_justUrl, filename)) {
