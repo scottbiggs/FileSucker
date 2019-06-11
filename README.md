@@ -1,11 +1,14 @@
+### Purpose
+
 Downloading lots of sequential files can be a pain.  One-by-one gets very tedious.  Since I couldn't find anything, I went ahead and wrote my own.
 
+#### How to Run
 It's a java app, which means you must have java installed to run it.  So it goes.
 
 And right now, it looks like you can only run it in the same directory as the .class files.  That's the way the ball bounces.
 
-Here's the usage/man:
-
+#### Here's the usage/man:
+```
 version 1.1
   USAGE:
 	fsucker <url> [-m <max_count>] [-k max_skipped])
@@ -37,4 +40,4 @@ examples:
       file002.png, file003.png, file004.png (which all fail) and then
       get a hit with file005.png.  The program will continue along with
       sequential files until it fails 10 times in a row, which ends the run.
-      
+```
