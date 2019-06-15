@@ -31,6 +31,10 @@ public class fsucker {
 		+ "The next file in sequential order will be downloaded as well.\n"
 		+ "This repeats until no file is found or the process is killed.\n"
 		+ "\n"
+		+ "   " + ConsoleColors.BOLD + "-s" + ConsoleColors.RESET + "   Define a suffix.  This is a set of characters\n"
+		+ "        that appear AFTER the group of changing numbers (but does not include\n"
+		+ "        the extension or the dot).\n"
+		+ "\n"
 		+ "   " + ConsoleColors.BOLD + "-m" + ConsoleColors.RESET + "   Limit the number of files to download to this many.\n"
 		+ "        Default is 1000.  Using just 1 is nice for testing.\n"
 		+ "\n"
@@ -61,11 +65,17 @@ public class fsucker {
 	/** Skip this many files before calling it quits */
 	private static final int DEFAULT_SKIP_COUNT = 0;
 
+	/** Indicates a command line switch */
+	private static final char COMMAND_LINE_SWITCH_INDICATOR = '-';
+
+	/** Command line switch letter indicating that the next param will be suffix string */
+	private static final char SUFFIX_SWITCH_LETTER = 's';
+
 	/** Command line switch that indicates the next param will be the max count */
-	private static final String MAX_COUNT_SWITCH = "-m";
+	private static final char MAX_COUNT_SWITCH_LETTER = 'm';
 
 	/** Command line switch that indicates the next param will be the skip count */
-	private static final String SKIP_SWITCH = "-k";
+	private static final char SKIP_SWITCH_LETTER = 'k';
 
 	//-----------------------
 	//	data
@@ -84,10 +94,17 @@ public class fsucker {
 	private static String m_urlPrefix;
 
 	/**
-	 * The filename prefix (no extension or dot).
+	 * The filename prefix (no suffix, dot, or extension).
 	 * This is the item that gets incremented.
 	 */
 	private static String m_filenamePrefix;
+
+	/**
+	 * If there is a suffix (characters that appear AFTER the incrementing
+	 * number), this is it.  Defaults to the empty String so that rebuilding
+	 * works correctly.
+	 */
+	private static String m_suffix = "";
 
 	/*
 	 * The separator between the filename and the extension.
@@ -127,7 +144,7 @@ public class fsucker {
 
 		// Now start sucking up files
 		while (count < m_maxCount) {
-			String filename = m_filenamePrefix + m_dot + m_ext;
+			String filename = m_filenamePrefix + m_suffix + m_dot + m_ext;
 			String url = m_urlPrefix + filename;
 			if (downloadFile (url, filename)
 						  == false) {
@@ -204,10 +221,27 @@ public class fsucker {
 			m_filenamePrefix = m_origUrl.substring(slashPos + 1, dotPos);
 		}
 
-		// System.out.println("m_urlPrefix = " + m_urlPrefix +
-		// 				   ", m_filenamePrefix = " + m_filenamePrefix +
-		// 				   ", m_dot = " + m_dot +
-		// 				   ", m_ext = " + m_ext);
+		// If there's a suffix, handle that.
+		int len = m_suffix.length();
+		if (len > 0) {
+			// first, check to make sure that the last bit of m_filenamePrefix
+			// actually IS m_suffix!
+			int filenameLen = m_filenamePrefix.length();
+			String sub = m_filenamePrefix.substring(filenameLen - len, filenameLen);
+			if (m_suffix.equals(sub) == false) {
+				System.out.println("Suffix (" + m_suffix + ") did not match the end of " + m_origUrl + ". Aborting.");
+				System.out.println("len = " + len + ", sub = " + sub + ", m_suffix = " + m_suffix);
+				return false;
+			}
+
+			m_filenamePrefix = m_filenamePrefix.substring(0, filenameLen - len);
+		}
+
+		System.out.println("m_urlPrefix = " + m_urlPrefix +
+						   ", m_filenamePrefix = " + m_filenamePrefix +
+						   ", m_suffix = " + m_suffix +
+						   ", m_dot = " + m_dot +
+						   ", m_ext = " + m_ext);
 		return true;
 	}
 
@@ -266,17 +300,23 @@ public class fsucker {
 		m_maxCount = MAX_FILES;
 
 		switch (args.length) {
+			case 7:
+				if (parseOption (args[5], args[6]) == false) {
+					return false;
+				}
+				// fall through...
+
 			case 5:
 				if (parseOption (args[3], args[4]) == false) {
 					return false;
 				}
-				// fall-through...
+				// fall through...
 
 			case 3:
 				if (parseOption(args[1], args[2]) == false) {
 					return false;
 				}
-				// fall-through...
+				// fall through...
 
 			case 1:
 				m_origUrl = args[0];
@@ -301,19 +341,37 @@ public class fsucker {
 	 *				False if something wasn't right.
 	 *
 	 *	side effects
-	 *		todo
+	 *		m_suffix	May be changed to reflect command params.
+	 *		m_maxCount	"										"
+	 *		m_skipCount	"										"
 	 */
 	private static boolean parseOption(String switchStr, String paramStr) {
 
-		if (switchStr.equals(MAX_COUNT_SWITCH)) {
-			m_maxCount = Integer.parseInt(paramStr);
-		}
-		else if (switchStr.equals(SKIP_SWITCH)) {
-			m_skipCount = Integer.parseInt(paramStr);
-		}
-		else {
+		// check for appropriate switch
+		if (switchStr.charAt(0) != COMMAND_LINE_SWITCH_INDICATOR) {
+			System.out.println("Unknown command line switch indicator.");
 			return false;
 		}
+
+		char switchLetter = switchStr.charAt(1);
+		switch (switchLetter) {
+			case SUFFIX_SWITCH_LETTER:
+				m_suffix = paramStr;
+				break;
+
+			case MAX_COUNT_SWITCH_LETTER:
+				m_maxCount = Integer.parseInt(paramStr);
+				break;
+
+			case SKIP_SWITCH_LETTER:
+				m_skipCount = Integer.parseInt(paramStr);
+				break;
+
+			default:
+			System.out.println("Could not recognize command switch letter.");
+				return false;
+		}
+
 		return true;
 	}
 
