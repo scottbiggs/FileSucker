@@ -237,11 +237,11 @@ public class fsucker {
 			m_filenamePrefix = m_filenamePrefix.substring(0, filenameLen - len);
 		}
 
-		System.out.println("m_urlPrefix = " + m_urlPrefix +
-						   ", m_filenamePrefix = " + m_filenamePrefix +
-						   ", m_suffix = " + m_suffix +
-						   ", m_dot = " + m_dot +
-						   ", m_ext = " + m_ext);
+		// System.out.println("m_urlPrefix = " + m_urlPrefix +
+		// 				   ", m_filenamePrefix = " + m_filenamePrefix +
+		// 				   ", m_suffix = " + m_suffix +
+		// 				   ", m_dot = " + m_dot +
+		// 				   ", m_ext = " + m_ext);
 		return true;
 	}
 
