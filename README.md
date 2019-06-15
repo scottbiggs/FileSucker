@@ -38,6 +38,10 @@ version 1.1
 
           This will download DSC-0001.jpg and DSC-002.jpg only.
 
+       fsucker http://annoyingname.net/p1001_t.jpg -s _t
+          Will download the p1001_t.jpg, p1002_t.jpg, p1003_t.jpg...
+          until no more files can be found.
+
        fsucker http://inconsistentfiles.com/file001.png -k 10
           Let's say that file001.png exists, but there's a gap of four
           files before the sequence continues.  This will keep trying with
