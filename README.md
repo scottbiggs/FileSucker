@@ -30,22 +30,20 @@ version 1.1
             for this many times before calling it quits.
 
     examples:
-       fsucker http://www.farmville.com/images/weeds3000.jpg
+        fsucker http://www.farmville.com/images/weeds3000.jpg
+           Downloads weeds3000.jpg, weeds3001.jpg ... from farmville.com
 
-          This will download weeds3000.jpg, weeds3001.jpg ... from farmville.com
+        fsucker http://www.myfaveimages.com/graphix/DSC-0001.jpg -m 2
+           This will download DSC-0001.jpg and DSC-002.jpg only.
 
-       fsucker http://www.myfaveimages.com/graphix/DSC-0001.jpg -m 2
+        fsucker http://annoyingname.net/p1001_t.jpg -s _t
+           Will download the p1001_t.jpg, p1002_t.jpg, p1003_t.jpg ...
+           until no more files can be found.
 
-          This will download DSC-0001.jpg and DSC-002.jpg only.
-
-       fsucker http://annoyingname.net/p1001_t.jpg -s _t
-          Will download the p1001_t.jpg, p1002_t.jpg, p1003_t.jpg...
-          until no more files can be found.
-
-       fsucker http://inconsistentfiles.com/file001.png -k 10
-          Let's say that file001.png exists, but there's a gap of four
-          files before the sequence continues.  This will keep trying with
-          file002.png, file003.png, file004.png (which all fail) and then
-          get a hit with file005.png.  The program will continue along with
-          sequential files until it fails 10 times in a row, which ends the run.
+        fsucker http://inconsistentfiles.com/file001.png -k 10
+           Let's say that file001.png exists, but there's a gap of four
+           files before the sequence continues.  This will keep trying with
+           file002.png, file003.png, file004.png (which all fail) and then
+           get a hit with file005.png.  The program will continue along with
+           sequential files until it fails 10 times in a row, which ends the run.    
 ```
